@@ -37,6 +37,10 @@
         }
       })
 
+      $(document).on('click', '#create', function(){
+        alert('something');
+      })
+
     })
     </script>
   </head>
@@ -50,7 +54,7 @@
               <img class="img-circle" src="{{user.profilePic}}" alt="Profile picture">
               <h4>{{user.fullName}} </h4>
               <p class="log">|</p>
-              <a href="#"><p class="log"> Log out</p></a>
+              <a href="/logout"><p class="log"> Log out</p></a>
             </div>
         </div>
         <hr>
