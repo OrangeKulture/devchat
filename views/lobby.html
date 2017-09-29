@@ -11,7 +11,7 @@
     <script src="/socket.io/socket.io.js"></script>
     <script>
     $(function(){
-      let host = 'https://devchat-ja.herokuapp.com';
+      let host = '{{configOptions.host}}';
       let socket = io.connect(host + '/roomlist');
 
       socket.on('connect', () => {

@@ -12,7 +12,7 @@
     <script src="/socket.io/socket.io.js"></script>
     <script>
       $(function(){
-        let host = 'https://devchat-ja.herokuapp.com';
+        let host = '{{configOptions.host}}';
         let messages = io.connect(host + '/messages');
         let roomNum = '{{room_number}}';
         let userName = '{{user.fullName}}';
