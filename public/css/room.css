@@ -1,0 +1,100 @@
+.room {
+	min-width:100%;
+	background: #eee;
+	margin-top: 1%;
+	padding-bottom: 5px;
+	box-shadow: 0 1px 3px 1px rgba(0,0,0,0.5);
+}
+
+.chat-window {
+	min-width:100%;
+	background: #eee;
+	margin-top: 2%;
+	padding: 10px;
+	border-radius: 10px;
+	box-shadow: 0 1px 1px 1px rgba(0,0,0,0.3);
+}
+
+.roomName {
+	font-family: 'Architects Daughter', cursive;
+	letter-spacing: 2px;
+	font-size: 3.5em;
+}
+
+.chatMsg {
+	border: 1px solid rgba(59, 89, 152,0.15);
+	/* min-height: 300px; */
+	padding: 15px;
+	height: 400px;
+	overflow: scroll;
+}
+
+.chatUsr {
+	border: 1px solid rgba(59, 89, 152,0.15);
+	padding: 3px;
+	min-height: 300px;
+}
+
+
+p, ul {
+	margin: 0;
+	padding: 0;
+}
+
+.messages, .users {
+	list-style: none;
+}
+
+.userName {
+	font-family: 'Architects Daughter', cursive;
+	font-weight: bold;
+	font-size: 1.5em;
+	color: #3b5998;
+}
+
+.userMsg {
+	display: inline-block;
+	background-color: rgba(59, 89, 152,0.15);
+	padding: 5px 20px;
+	border-radius: 5px;
+}
+
+p {
+	display:inline;
+	margin: 0 5px;
+}
+
+.msg {
+	font-size: 1.2em;
+}
+
+li {
+	margin: 10px 0;
+}
+
+.userT {
+	background: #3b5998;
+	padding: 10px;
+	color: #eee;
+}
+
+.users li {
+	font-size: 1.1em;
+	background-color: rgba(59, 89, 152,0.15);
+	padding: 3px;
+	border-radius: 5px;
+	display: block;
+	width: 75%;
+	margin: 10px auto;
+	letter-spacing: 1.8px;
+}
+
+.newMsg {
+	min-width: 100%;
+	margin-top: 10px;
+	border: 1px solid rgba(59, 89, 152,0.5);
+	height: 35px;
+	padding: 8px;
+	background-color: #eee;
+	border-radius: 5px;
+}

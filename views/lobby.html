@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>DEV Chat</title>
+    <link href="https://fonts.googleapis.com/css?family=Architects+Daughter|Cutive+Mono" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="../css/lobby.css">
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+    $(function(){
+      let host = '{{configOptions.host}}';
+      let socket = io.connect(host + '/roomlist');
+
+      socket.on('connect', () => {
+        console.log('Connection Established!');
+      })
+
+      socket.on('roomupdate', function(data) {
+        let arrData = JSON.parse(data);
+        $('.roomList').html('');
+        for(let i = 0;i<arrData.length;i++){
+          let displayStr = '<a href="room/' + arrData[i].room_number + '"><li>' + arrData[i].room_name + '</li></a>';
+          $('.roomList').prepend(displayStr);
+        }
+        
+      })
+
+      $(document).on('click', '#create', function() {
+        let room_name = $('#createR').val();
+        if(room_name != ''){
+          let room_number = parseInt(Math.random()*10000);
+          socket.emit('newroom', {room_name:room_name, room_number:room_number});
+          $('#createR').val('');
+        }
+      })
+
+    })
+    </script>
+  </head>
+  <body>
+   <div class="dash">
+        <div class="top">
+            <div class="head">
+              <h2><span class="word">DEV</span> Chat <span class="divide">|</span> <span class="tag">The best chat for developers</span></h2>
+            </div>
+            <div class="pic">
+              <img class="img-circle" src="{{user.profilePic}}" alt="Profile picture">
+              <h4>{{user.fullName}} </h4>
+              <p class="log">|</p>
+              <a href="#"><p class="log"> Log out</p></a>
+            </div>
+        </div>
+        <hr>
+        <div class="create text-center">
+          <h3>Create your own chat rooms</h3>
+          <input type="text" name="createRoom" id="createR" autocomplete="off" placeholder="Enter room name">
+          <br>
+          <button class="btn btn-info" id="create">Create Room</button>
+        </div>
+      </div>
+      <div class="container">
+      <div class="rooms text-center">
+        <h1 class="roomT"> Available Chat Rooms</h1>
+        <hr>
+        <div class="roomWindow">
+          <ul class="roomList">
+          </ul>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

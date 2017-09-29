@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>DEV Chat</title>
+    <link href="https://fonts.googleapis.com/css?family=Architects+Daughter|Cutive+Mono" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="../css/lobby.css">
+    <link rel="stylesheet" href="../css/room.css">
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      $(function(){
+        let host = '{{configOptions.host}}';
+        let messages = io.connect(host + '/messages');
+        let roomNum = '{{room_number}}';
+        let userName = '{{user.fullName}}';
+        let userPic = '{{user.profilePic}}';
+
+        messages.on('connect', () => {
+          messages.emit('joinroom', {room:roomNum, user:userName, userPic:userPic})
+        })
+
+        $(document).on('keyup', '.newMsg', function(e){
+          if(e.which === 13 && $(this).val()!=''){
+            messages.emit('newMessage', {
+              room_number: roomNum,
+              user: userName,
+              userPic: userPic,
+              message: $(this).val()
+            })
+            updateMessageFeed(userPic, $(this).val(), userName)
+            $(this).val('');
+          }
+        })
+
+        messages.on('messagefeed', (data) => {
+          let msgs = JSON.parse(data);
+          updateMessageFeed(msgs.userPic, msgs.message, msgs.user);
+        })
+
+        function updateMessageFeed(userPic, message, user){
+          let str =  '<li>';
+              str += '<div class="userMsg">';
+              str += '<img class="img-circle chatImg" src="'+userPic+'">';
+              str += '<p class="userName">'+user+'</p>';
+              str += '<p class="msg">'+ message+'</p>';
+              str += '</div>';
+              str += '</li>';
+          $(str).hide().prependTo($('.messages')).slideDown(150);
+        }
+
+        messages.on('updateUsersList', (data) => {
+          let userList = JSON.parse(data);
+          $('.users').html('');
+          for(let x = 0;x < userList.length;x++){
+            let str = '<li>'+userList[x].user+'</li>'
+            $(str).prependTo($('.users'));
+          }
+        })
+
+        setInterval(() => {
+          messages.emit('updateList', {room:roomNum});
+        },15000);
+
+      })
+    </script>
+  </head>
+  <body>
+  	<div class="room">
+        <div class="top">
+            <div class="head">
+              <h2><span class="word">DEV</span> Chat <span class="divide">|</span> <span class="tag">The best chat for developers</span></h2>
+            </div>
+            <div class="pic">
+              <img class="img-circle" src="{{user.profilePic}}" alt="Profile picture">
+              <h4>{{user.fullName}} </h4>
+              <p class="log">|</p>
+              <a href="/logout"><p class="log"> Log out</p></a>
+              <p class="log">|</p>
+              <a href="/lobby"><p class="log"> More Chat Rooms</p></a>
+            </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="chat-window">
+          <div class="row text-center">
+            <div class="col-md-12">
+              <h2 class="roomName"><span class="word">{{room_name}}</span></h2>
+              <hr>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-9">
+              <div class="chatMsg">
+                <ul class="messages">
+                </ul>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="chatUsr text-center">
+                <div class="userT">
+                  <h4>Current Users</h4>
+                </div>
+                <ul class="users">
+                  <li>{{user.fullName}}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <input type="text" class="newMsg" autocomplete="off" placeholder="Enter your message and press enter..">
+            </div>
+          </div>
+        </div>
+      </div>
+  </body>
+</html>
