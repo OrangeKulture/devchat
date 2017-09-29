@@ -4,7 +4,7 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const configOptions = require('./config/config.js');
 const connectMongo = require('connect-mongo');
-const mongoose = require('mongoose').connect(configOptions.dbUrl);
+const mongoose = require('mongoose');
 const passport = require('passport');
 const favicon = require('serve-favicon');
 const FacebookStrategy = require('passport-facebook').Strategy;
@@ -12,6 +12,16 @@ let rooms = [];
 
 let app = express();
 let env = process.env.NODE_ENV || 'development';
+
+mongoose.connect(configOptions.dbUrl);
+mongoose.connection.on('connected', () => {
+    console.log('Connected to database');
+})
+mongoose.Promise = global.Promise;
+
+mongoose.connection.on('error', (err) => {
+    console.log('Database error: '+err);
+})
 
 app.set('views', path.join(__dirname, 'views'));
 app.engine('html', require('hogan-express'));
