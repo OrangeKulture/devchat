@@ -35,7 +35,7 @@ if(env === 'development') {
 	app.use(session({
 		secret: configOptions.sessionSecret,
 		store: new connectMongo({
-			mongoose_connection: mongoose.connections[0],
+			mongooseConnection: mongoose.connections[0],
 			stringify: true,
 			saveUninitialized:true, 
 			resave:true
