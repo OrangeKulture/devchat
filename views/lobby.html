@@ -15,7 +15,7 @@
       let socket = io.connect(host + '/roomlist');
 
       socket.on('connect', () => {
-        alert('Connection Established!');
+        console.log('Connection Established!');
       })
 
       socket.on('roomupdate', function(data) {

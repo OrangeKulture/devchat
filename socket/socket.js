@@ -6,7 +6,6 @@ module.exports = (io, rooms) => {
             rooms.push(data);
             socket.broadcast.emit('roomupdate', JSON.stringify(rooms));
             socket.emit('roomupdate', JSON.stringify(rooms));
-            alert('something');
         })
     })
 
