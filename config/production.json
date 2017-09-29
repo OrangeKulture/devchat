@@ -6,5 +6,5 @@
         "appSecret": "19aa2878a820ebe55122f478041d02c3",
         "callbackUrl": "https://devchat-ja.herokuapp.com/auth/facebook/callback"
     },
-    "host":"https://devchat-ja.herokuapp.com/"
+    "host":"https://devchat-ja.herokuapp.com"
 }
