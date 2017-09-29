@@ -3,7 +3,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const configOptions = require('./config/config.js');
-const connectMongo = require('connect-mongo');
+const connectMongo = require('connect-mongo')(session);
 const mongoose = require('mongoose');
 const passport = require('passport');
 const favicon = require('serve-favicon');
@@ -36,7 +36,9 @@ if(env === 'development') {
 		secret: configOptions.sessionSecret,
 		store: new connectMongo({
 			mongoose_connection: mongoose.connections[0],
-			stringify: true
+			stringify: true,
+			saveUninitialized:true, 
+			resave:true
 		})
 	}));
 }
