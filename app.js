@@ -36,10 +36,8 @@ if(env === 'development') {
 		secret: configOptions.sessionSecret,
 		store: new connectMongo({
 			url: configOptions.dbUrl,
-			mongooseConnection: mongoose.connections[0],
+			mongoose_connection: mongoose.connections[0],
 			stringify: true,
-			saveUninitialized:true, 
-			resave:true
 		})
 	}));
 }
