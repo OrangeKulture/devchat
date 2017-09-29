@@ -19,7 +19,7 @@
         let userPic = '{{user.profilePic}}';
 
         messages.on('connect', () => {
-          messages.emit('joinroom', io.of('/messages'), {room:roomNum, user:userName, userPic:userPic})
+          messages.emit('joinroom', {room:roomNum, user:userName, userPic:userPic})
         })
 
         $(document).on('keyup', '.newMsg', function(e){
